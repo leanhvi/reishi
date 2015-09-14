@@ -42,7 +42,7 @@ public final class ReishiConfig {
                 //Logger.getLogger(RabbitmqConfig.class.getName()).log(Level.SEVERE, null, ex);
             }
         }        
-        ReishiConfig.wordSegmentModelsDir = prop.getProperty("wordsegment.models.dir", "models\\jvnsegmenter");
+        ReishiConfig.wordSegmentModelsDir = prop.getProperty("wordsegment.models.dir", "models//jvnsegmenter");
     }
     
     public void crawlerConfig() {
