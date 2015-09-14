@@ -33,7 +33,7 @@ public class Crawler {
         Document doc;		
         try {
             //URLs.getListURLApproded().add(url);
-            String crawledDoc = HttpGet.sentGet(url.getUrl());
+            String crawledDoc = HttpGet.sentGet(url.getUrl());           
             //doc = Jsoup.connect(url.getUrl()).get();
             doc = Jsoup.parse(crawledDoc);
             URLObject ua = new URLObject();
@@ -46,9 +46,18 @@ public class Crawler {
             for (Element link : links) {
                 boolean flagStart = false;
                 href = link.attr("href");
+                if(!href.startsWith("/")) {
+                    href = "/" + href;
+                }
                 URLObject u = new URLObject();
                 u.setState(URLState.GREEN);
-                u.setUrl(ReishiConfig.crawler.start + href);
+                if(!href.contains(ReishiConfig.crawler.start)) {
+                    u.setUrl(ReishiConfig.crawler.start + href);
+                }
+                else {
+                    u.setUrl(href);
+                }
+                
                 String[] startWithStrings = ReishiConfig.crawler.startWith.split(",");
                 for(int i = 0; i < startWithStrings.length; ++i) {
                     if(href.startsWith(startWithStrings[i])) {
@@ -58,7 +67,7 @@ public class Crawler {
                 }
                 String[] notContainStrings = ReishiConfig.crawler.notContain.split(",");
                 for(int i = 0; i < notContainStrings.length; ++i) {
-                    if(href.contains(notContainStrings[i])) {
+                    if(notContainStrings[i] != null && notContainStrings[i].length() > 0 && href.contains(notContainStrings[i])) {
                         flagStart = flagStart && false;
                         break;
                     }

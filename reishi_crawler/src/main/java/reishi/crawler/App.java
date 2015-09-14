@@ -25,7 +25,7 @@ public class App {
         URLs.getListURLApproded().add(u);
         boolean status = false;
         while(!URLs.getListURLs().isEmpty()) {
-            Crawler crawler = new Crawler();        	
+            Crawler crawler = new Crawler();
             if(status) {
                 System.out.println(URLs.getListURLs().get(0).getUrl());        	
                 crawler.crawlerUrl(URLs.getListURLs().get(0));
