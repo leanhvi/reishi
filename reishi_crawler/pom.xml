@@ -38,4 +38,15 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
+    <build>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
 </project>
