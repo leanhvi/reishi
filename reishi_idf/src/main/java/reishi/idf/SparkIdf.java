@@ -25,7 +25,7 @@ public class SparkIdf {
         JavaSparkContext sc = new JavaSparkContext(conf);
         
         JavaRDD<String> input = sc.textFile(inputFile);
-        
+        System.err.println(inputFile);
         JavaRDD<String> words = input.flatMap(
             new FlatMapFunction<String, String>() {
                 @Override
