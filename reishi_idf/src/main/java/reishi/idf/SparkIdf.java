@@ -20,7 +20,7 @@ import scala.Tuple2;
  * @author manhc
  */
 public class SparkIdf {
-    public void CalculatorIdf(String inputFile, String outputFile) {
+    public void calculatorIdf(String inputFile, String outputFile) {
         SparkConf conf = new SparkConf().setAppName("IDF");
         JavaSparkContext sc = new JavaSparkContext(conf);
         
