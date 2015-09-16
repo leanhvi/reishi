@@ -26,13 +26,14 @@ public class SparkIdf {
         
         JavaRDD<String> input = sc.textFile(inputFile);
         System.err.println(inputFile);
-        JavaRDD<String> words = input.flatMap(
-            new FlatMapFunction<String, String>() {
-                @Override
-                public Iterable<String> call(String x) {
-                    return Arrays.asList(x.split(" "));
+        JavaRDD<String> words;
+        words = input.flatMap(
+                new FlatMapFunction<String, String>() {                                       
+                    @Override
+                    public Iterable<String> call(String t) throws Exception {
+                        return Arrays.asList(t.split(" "));
+                    }
                 }
-            }
         );
         
         JavaPairRDD<String, Integer> counts = words.mapToPair(
