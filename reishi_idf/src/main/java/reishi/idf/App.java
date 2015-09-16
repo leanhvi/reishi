@@ -12,7 +12,7 @@ package reishi.idf;
 public class App {
     public static void main(String[] args) {
         SparkIdf sparkIdf = new SparkIdf();
-        sparkIdf.calculatorIdf(args[0], args[1]);
+        sparkIdf.calculatorIdf("/user/crawlerData", "/user/words");
         System.out.println("Done");
     }
 }
