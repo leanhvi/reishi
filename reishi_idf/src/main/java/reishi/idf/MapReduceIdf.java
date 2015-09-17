@@ -24,7 +24,6 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
  * @author manhc
  */
 public class MapReduceIdf {
-    public static int threshold;
     public static class IdfMapper extends Mapper<Object, Text, Text, IntWritable> {
         private final static IntWritable one = new IntWritable(1);
         
@@ -56,14 +55,11 @@ public class MapReduceIdf {
                 sum += val.get();
             }
             result.set(sum);
-            if(!(sum < MapReduceIdf.threshold)) {
-                context.write(key, result);
-            }
+            context.write(key, result);
         }
     }
     
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
-        threshold = Integer.parseInt(args[2]);
         Configuration conf = new Configuration();
         
         Job job = new Job(conf, "Calculator Idf");
