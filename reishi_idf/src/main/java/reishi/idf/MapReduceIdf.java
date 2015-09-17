@@ -55,7 +55,7 @@ public class MapReduceIdf {
                 sum += val.get();
             }
             result.set(sum);
-            if(!(sum < 270)) {
+            if(!(sum < 100)) {
                 context.write(key, result);
             }
         }
