@@ -6,6 +6,8 @@
 package reishi.idf;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -30,9 +32,15 @@ public class MapReduceIdf {
         @Override
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
             StringTokenizer itr = new StringTokenizer(value.toString());
-            while (itr.hasMoreTokens()) {                
-                word.set(itr.nextToken());
-                context.write(word, one);
+            
+            List<String> strs = new ArrayList<String>();
+            while (itr.hasMoreTokens()) {  
+                String temp = itr.nextToken();
+                if(!strs.contains(temp)) {
+                    strs.add(temp);
+                    word.set(temp);
+                    context.write(word, one);
+                }
             }
         }
     }
