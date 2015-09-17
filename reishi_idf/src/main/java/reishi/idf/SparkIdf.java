@@ -21,11 +21,11 @@ import scala.Tuple2;
  */
 public class SparkIdf {
     public void calculatorIdf(String inputFile, String outputFile) {
-        SparkConf conf = new SparkConf().setAppName("IDF");
+        SparkConf conf = new SparkConf().setMaster("local").setAppName("IDF");
         JavaSparkContext sc = new JavaSparkContext(conf);
-        
+        System.out.println(inputFile);
         JavaRDD<String> input = sc.textFile(inputFile);
-        System.err.println(inputFile);
+        System.out.println(inputFile);
         JavaRDD<String> words;
         words = input.flatMap(
                 new FlatMapFunction<String, String>() {                                       
