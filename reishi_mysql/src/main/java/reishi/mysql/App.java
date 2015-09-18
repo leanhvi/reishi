@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import org.apache.log4j.Logger;
+import reishi.dataobjects.CrawlerDataObj;
 
 /**
  *
@@ -21,7 +22,8 @@ public class App {
     private static ResultSet resultSet = null;
     private static Logger logger = Logger.getLogger(App.class);
         
-    public static void main(String[] args)  {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException  {
+        /*
         try {
             
             connect = MySqlConnectionSingleton.getInstance().getConnection();
@@ -42,7 +44,12 @@ public class App {
         finally{
             close();
         }                
-        
+        */
+        CrawlerData cr = new CrawlerData();
+        CrawlerDataObj obj = cr.CrawlerDataGetById(1);
+        boolean rs = cr.CrawlerDataUpdateVector(1, "Linh Chi");
+        System.out.println(obj.wordSegmented);
+        System.out.println(rs + " Chi");
     }
     
     public static void close() {

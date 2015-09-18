@@ -39,6 +39,46 @@ public class CrawlerData {
         return 0;
     }
     
+    public boolean CrawlerDataUpdateVector(int id, String vector) throws ClassNotFoundException, SQLException {
+        connect = MySqlConnectionSingleton.getInstance().getConnection();       
+        boolean result = true;
+        String sproc = "{call CrawlerData_UpdateVector(?,?)}";
+        CallableStatement cs = connect.prepareCall(sproc);
+        cs.setString("vector", vector);
+        cs.setInt("id", id);        
+        try {
+            result = cs.execute();
+        }
+        finally {
+            //close();
+        }           
+        return result;
+    }
+    
+    public CrawlerDataObj CrawlerDataGetById(int id) throws ClassNotFoundException, SQLException {
+        ResultSet rs = null;
+        CrawlerDataObj result = new CrawlerDataObj();
+        connect = MySqlConnectionSingleton.getInstance().getConnection();       
+        String sproc = "{call CrawlerData_GetById(?)}";
+        CallableStatement cs = connect.prepareCall(sproc);
+        cs.setInt("id", id);
+        try {
+            rs = cs.executeQuery();
+            if(rs.next()) {
+                result.contents = rs.getString("Contents");
+                result.raw = rs.getString("Raw");
+                result.source = rs.getString("Sources");
+                result.url = rs.getString("Url");
+                result.wordSegmented = rs.getString("WordSegmented");   
+                result.id = rs.getInt("Id");
+            }
+        }
+        finally {
+            //close();
+        }            
+        return result;
+    }
+    
     public void close() {
         try {
             if(resultSet != null) {

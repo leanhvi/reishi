@@ -15,4 +15,14 @@ public class CrawlerDataObj {
     public String url;
     public String wordSegmented;
     public String raw;
+    public int id;
+    
+    public CrawlerDataObj() {
+        id = 0;
+        source = "";
+        contents = "";
+        url = "";
+        wordSegmented = "";
+        raw = "";        
+    }
 }
