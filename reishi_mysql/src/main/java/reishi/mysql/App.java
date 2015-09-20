@@ -9,8 +9,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import org.apache.log4j.Logger;
 import reishi.dataobjects.CrawlerDataObj;
+import reishi.objects.vocabulary.Word;
 
 /**
  *
@@ -46,10 +48,13 @@ public class App {
         }                
         */
         CrawlerData cr = new CrawlerData();
-        CrawlerDataObj obj = cr.CrawlerDataGetById(1);
-        boolean rs = cr.CrawlerDataUpdateVector(1, "Linh Chi");
+        CrawlerDataObj obj = cr.crawlerDataGetById(1);
+        boolean rs = cr.crawlerDataUpdateVector(1, "Linh Chi");
         System.out.println(obj.wordSegmented);
         System.out.println(rs + " Chi");
+        List<Word> vc = cr.wordsGetAll();
+        System.out.println(vc.size() + " Chi");
+        System.out.println(vc.get(1).word + " - " + vc.get(1).idf);
     }
     
     public static void close() {

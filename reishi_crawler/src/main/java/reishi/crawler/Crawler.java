@@ -91,7 +91,7 @@ public class Crawler {
                     obj.url = url.getUrl();
                     obj.wordSegmented = segmented;
                     try {
-                        crawlerData.CrawlerDataInser(obj);
+                        crawlerData.crawlerDataInser(obj);
                     } catch (ClassNotFoundException ex) {
                         Logger.getLogger(Crawler.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (SQLException ex) {

@@ -10,7 +10,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import reishi.dataobjects.CrawlerDataObj;
+import reishi.objects.vocabulary.Word;
 
 /**
  *
@@ -21,7 +24,7 @@ public class CrawlerData {
     private Statement statement = null;
     private ResultSet resultSet = null;
     
-    public int CrawlerDataInser(CrawlerDataObj obj) throws ClassNotFoundException, SQLException {
+    public int crawlerDataInser(CrawlerDataObj obj) throws ClassNotFoundException, SQLException {
         connect = MySqlConnectionSingleton.getInstance().getConnection();       
         String sproc = "{call CrawlerData_Insert(?,?,?,?,?)}";
         CallableStatement cs = connect.prepareCall(sproc);
@@ -39,7 +42,7 @@ public class CrawlerData {
         return 0;
     }
     
-    public boolean CrawlerDataUpdateVector(int id, String vector) throws ClassNotFoundException, SQLException {
+    public boolean crawlerDataUpdateVector(int id, String vector) throws ClassNotFoundException, SQLException {
         connect = MySqlConnectionSingleton.getInstance().getConnection();       
         boolean result = true;
         String sproc = "{call CrawlerData_UpdateVector(?,?)}";
@@ -55,7 +58,7 @@ public class CrawlerData {
         return result;
     }
     
-    public CrawlerDataObj CrawlerDataGetById(int id) throws ClassNotFoundException, SQLException {
+    public CrawlerDataObj crawlerDataGetById(int id) throws ClassNotFoundException, SQLException {
         ResultSet rs = null;
         CrawlerDataObj result = new CrawlerDataObj();
         connect = MySqlConnectionSingleton.getInstance().getConnection();       
@@ -71,6 +74,28 @@ public class CrawlerData {
                 result.url = rs.getString("Url");
                 result.wordSegmented = rs.getString("WordSegmented");   
                 result.id = rs.getInt("Id");
+            }
+        }
+        finally {
+            //close();
+        }            
+        return result;
+    }
+    
+    public List<Word> wordsGetAll() throws ClassNotFoundException, SQLException {
+        ResultSet rs = null;
+        List<Word> result = new ArrayList<>();
+        connect = MySqlConnectionSingleton.getInstance().getConnection();       
+        String sproc = "{call Words_GetAll()}";
+        CallableStatement cs = connect.prepareCall(sproc);
+        try {
+            rs = cs.executeQuery();
+            while(rs.next()) {
+                Word w = new Word();
+                w.id = rs.getInt("Id");
+                w.idf = rs.getDouble("Idf");
+                w.word = rs.getString("Word");
+                result.add(w);
             }
         }
         finally {
