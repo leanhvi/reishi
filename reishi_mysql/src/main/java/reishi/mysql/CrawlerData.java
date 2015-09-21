@@ -104,6 +104,22 @@ public class CrawlerData {
         return result;
     }
     
+    public boolean crawlerDataUpdateClassification(int id, int classification) throws ClassNotFoundException, SQLException {
+        connect = MySqlConnectionSingleton.getInstance().getConnection();       
+        boolean result = true;
+        String sproc = "{call CrawlerData_UpdateClassification(?,?)}";
+        CallableStatement cs = connect.prepareCall(sproc);
+        cs.setInt("classification", classification);
+        cs.setInt("id", id);        
+        try {
+            result = cs.execute();
+        }
+        finally {
+            //close();
+        }           
+        return result;
+    }
+    
     public void close() {
         try {
             if(resultSet != null) {

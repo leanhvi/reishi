@@ -5,6 +5,7 @@
  */
 package reishi.crawler;
 
+import org.apache.log4j.Logger;
 import reishi.config.ReishiConfig;
 import reishi.objects.crawler.URLObject;
 import reishi.objects.crawler.URLObject.URLState;
@@ -15,6 +16,8 @@ import reishi.objects.crawler.URLs;
  * @author manhc
  */
 public class App {
+    public static Logger logger = Logger.getLogger(App.class);
+    
     public static void main( String[] args ){     
         ReishiConfig config = new ReishiConfig();
     	int sum = 0;
@@ -27,12 +30,13 @@ public class App {
         while(!URLs.getListURLs().isEmpty()) {
             Crawler crawler = new Crawler();
             if(status) {
-                System.out.println(URLs.getListURLs().get(0).getUrl());        	
+                System.out.println(URLs.getListURLs().get(0).getUrl());     
+                logger.info(URLs.getListURLs().get(0).getUrl());
                 crawler.crawlerUrl(URLs.getListURLs().get(0));
             }
             else {
                 int count = URLs.getListURLs().size() - 1;
-                System.out.println(URLs.getListURLs().get(count).getUrl());        	
+                System.out.println(URLs.getListURLs().get(count).getUrl());    	
                 crawler.crawlerUrl(URLs.getListURLs().get(count));
             }
             status = !status;
