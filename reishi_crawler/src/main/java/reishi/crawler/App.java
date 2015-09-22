@@ -36,7 +36,8 @@ public class App {
             }
             else {
                 int count = URLs.getListURLs().size() - 1;
-                System.out.println(URLs.getListURLs().get(count).getUrl());    	
+                System.out.println(URLs.getListURLs().get(count).getUrl());
+                logger.info(URLs.getListURLs().get(count).getUrl());                
                 crawler.crawlerUrl(URLs.getListURLs().get(count));
             }
             status = !status;
